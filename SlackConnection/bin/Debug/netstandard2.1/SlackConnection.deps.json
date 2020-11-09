@@ -9,7 +9,8 @@
     ".NETStandard,Version=v2.1/": {
       "SlackConnection/1.0.0": {
         "dependencies": {
-          "Microsoft.Extensions.Http": "3.1.9"
+          "Microsoft.Extensions.Http": "3.1.9",
+          "Newtonsoft.Json": "12.0.3"
         },
         "runtime": {
           "SlackConnection.dll": {}
@@ -124,6 +125,14 @@
           "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll": {
             "assemblyVersion": "3.1.9.0",
             "fileVersion": "3.100.920.47302"
+          }
+        }
+      },
+      "Newtonsoft.Json/12.0.3": {
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "12.0.0.0",
+            "fileVersion": "12.0.3.23909"
           }
         }
       },
@@ -249,6 +258,13 @@
       "sha512": "sha512-IrHecH0eGG7/XoeEtv++oLg/sJHRNyeCqlA9RhAo6ig4GpOTjtDr32sBMYuuLtUq8ALahneWkrOzoBAwJ4L4iA==",
       "path": "microsoft.extensions.primitives/3.1.9",
       "hashPath": "microsoft.extensions.primitives.3.1.9.nupkg.sha512"
+    },
+    "Newtonsoft.Json/12.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "path": "newtonsoft.json/12.0.3",
+      "hashPath": "newtonsoft.json.12.0.3.nupkg.sha512"
     },
     "System.Buffers/4.4.0": {
       "type": "package",

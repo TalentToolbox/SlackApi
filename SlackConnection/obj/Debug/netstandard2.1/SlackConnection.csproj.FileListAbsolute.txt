@@ -2,3 +2,8 @@ C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\bin\Debug\netstand
 C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\bin\Debug\netstandard2.1\SlackConnection.dll
 C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\obj\Debug\netstandard2.1\SlackConnection.AssemblyInfoInputs.cache
 C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\obj\Debug\netstandard2.1\SlackConnection.AssemblyInfo.cs
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\obj\Debug\netstandard2.1\SlackConnection.csprojAssemblyReference.cache
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\bin\Debug\netstandard2.1\SlackConnection.pdb
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\obj\Debug\netstandard2.1\SlackConnection.csproj.CoreCompileInputs.cache
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\obj\Debug\netstandard2.1\SlackConnection.dll
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\obj\Debug\netstandard2.1\SlackConnection.pdb
