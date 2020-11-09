@@ -17,14 +17,17 @@ namespace SlackConnection.DTO
         public string Id { get; set; }
         [JsonProperty(PropertyName = "team_id")]
         public string TeamId { get; set; }
+
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-        [JsonProperty(PropertyName = "deleted")]
-        public bool Deleted { get; set; }
         [JsonProperty(PropertyName = "real_name")]
         public string RealName { get; set; }
+
         [JsonProperty(PropertyName = "profile")]
         public Profile Profile { get; set; }
+
+        [JsonProperty(PropertyName = "deleted")]
+        public bool Deleted { get; set; }
         [JsonProperty(PropertyName = "is_admin")]
         public bool IsAdmin { get; set; }
         [JsonProperty(PropertyName = "is_owner")]
