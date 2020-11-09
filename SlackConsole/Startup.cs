@@ -21,10 +21,14 @@ namespace SlackConsole
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ISlackHttpClientService, SlackHttpClientService>();
+            services.AddSingleton(Configuration);
 
-            services.AddHttpClient(Constants.SlackClientName, client =>
+            var slackBaseUrl = Configuration["Slack:BaseUrl"];
+            var slackClientName = Configuration["Slack:ClientName"];
+
+            services.AddHttpClient(slackClientName, client =>
             {
-                client.BaseAddress = new Uri("https://slack.com/");
+                client.BaseAddress = new Uri(slackBaseUrl);
                 client.Timeout = new TimeSpan(0, 0, 30);
                 client.DefaultRequestHeaders.Clear();
             });

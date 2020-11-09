@@ -1,43 +1,30 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 
 namespace SlackConnection.DTO
 {
     public class Profile
     {
-        //        "title": "",
-        //        "phone": "",
-        //        "skype": "",
-        //        "real_name": "Slackbot",
-        //        "real_name_normalized": "Slackbot",
-        //        "display_name": "Slackbot",
-        //        "display_name_normalized": "Slackbot",
-        //        "fields": null,
-        //        "status_text": "",
-        //        "status_emoji": "",
-        //        "status_expiration": 0,
-        //        "avatar_hash": "sv41d8cd98f0",
-        //        "always_active": true,
-        //        "first_name": "slackbot",
-        //        "last_name": "",
-        //        "image_24": "https://a.slack-edge.com/80588/img/slackbot_24.png",
-        //        "image_32": "https://a.slack-edge.com/80588/img/slackbot_32.png",
-        //        "image_48": "https://a.slack-edge.com/80588/img/slackbot_48.png",
-        //        "image_72": "https://a.slack-edge.com/80588/img/slackbot_72.png",
-        //        "image_192": "https://a.slack-edge.com/80588/marketing/img/avatars/slackbot/avatar-slackbot.png",
-        //        "image_512": "https://a.slack-edge.com/80588/img/slackbot_512.png",
-        //        "status_text_canonical": "",
-        //        "team": "T01DH8RPVD3"
-
+        [JsonProperty(PropertyName = "title")]
         public string Title { get; set; }
+        [JsonProperty(PropertyName = "phone")]
         public string Phone { get; set; }
+        [JsonProperty(PropertyName = "skype")]
         public string Skype { get; set; }
+        [JsonProperty(PropertyName = "real_name")]
         public string RealName { get; set; }
+        [JsonProperty(PropertyName = "real_name_normalized")]
         public string RealNameNormalized { get; set; }
+        [JsonProperty(PropertyName = "display_name")]
         public string DisplayName { get; set; }
+        [JsonProperty(PropertyName = "display_name_normalized")]
         public string DisplayNameNormalized { get; set; }
-        public IEnumerable<string> Fields { get; set; }
+        //[JsonProperty(PropertyName = "fields")]
+        //public IEnumerable<string> Fields { get; set; }
+        [JsonProperty(PropertyName = "first_name")]
         public string FirstName { get; set; }
+        [JsonProperty(PropertyName = "last_name")]
         public string LastName { get; set; }
+        [JsonProperty(PropertyName = "team")]
         public string Team { get; set; }
     }
 }

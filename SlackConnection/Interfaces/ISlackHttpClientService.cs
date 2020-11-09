@@ -6,7 +6,7 @@ namespace SlackConnection.Interfaces
 {
     public interface ISlackHttpClientService
     {
-        Task<List<Member>> GetUsersAsync();
-        Task<Member> GetUserAsync(string id);
+        Task<List<User>> GetUsersAsync();
+        Task<User> GetUserInfoAsync(string id);
     }
 }
