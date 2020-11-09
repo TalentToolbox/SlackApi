@@ -11,8 +11,6 @@ namespace SlackConnection
 {
     public class SlackHttpClientService : ISlackHttpClientService
     {
-        const string SlackClientName = "SlackClient";
-
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly AuthenticationHeaderValue _authenticationHeaderValue;
 
@@ -60,7 +58,7 @@ namespace SlackConnection
 
         private async Task<string> SendRequestAsync(HttpRequestMessage request)
         {
-            var httpClient = _httpClientFactory.CreateClient(SlackClientName);
+            var httpClient = _httpClientFactory.CreateClient(Constants.SlackClientName);
             using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
             // Ensure we have a Success Status Code - throws exception if success is false
             response.EnsureSuccessStatusCode();
