@@ -1,0 +1,4 @@
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\bin\Debug\netstandard2.1\SlackConnection.deps.json
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\bin\Debug\netstandard2.1\SlackConnection.dll
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\obj\Debug\netstandard2.1\SlackConnection.AssemblyInfoInputs.cache
+C:\Users\Alex\Documents\GitHub\Slack\SlackApi\SlackConnection\obj\Debug\netstandard2.1\SlackConnection.AssemblyInfo.cs
