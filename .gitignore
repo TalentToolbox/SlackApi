@@ -264,3 +264,13 @@ __pycache__/
 *.pyc
 
 */appsettings.json
+/SlackAppInteraction/Properties/serviceDependencies.local.json
+/SlackAppInteraction/Properties/serviceDependencies.json
+/SlackAppInteraction/host.json
+/SlackAppInteraction/.gitignore
+/JoinTeamWebhook/Properties/serviceDependencies.local.json
+/JoinTeamWebhook/Properties/serviceDependencies.json
+/JoinTeamWebhook/Properties/ServiceDependencies/JoinTeamWebhook - Zip Deploy/profile.arm.json
+/JoinTeamWebhook/Properties/PublishProfiles/JoinTeamWebhook - Zip Deploy.pubxml
+/JoinTeamWebhook/host.json
+/JoinTeamWebhook/.gitignore
