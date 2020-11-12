@@ -8,5 +8,6 @@ namespace SlackConnection.Interfaces
     {
         Task<List<User>> GetUsersAsync();
         Task<User> GetUserInfoAsync(string id);
+        Task PublishViewAsync(string viewString);
     }
 }

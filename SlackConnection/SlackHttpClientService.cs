@@ -3,9 +3,11 @@ using Newtonsoft.Json;
 using SlackConnection.DTO;
 using SlackConnection.Interfaces;
 using SlackConnection.Responses;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SlackConnection
@@ -48,6 +50,27 @@ namespace SlackConnection
             // Deserialize the JSON
             var response = JsonConvert.DeserializeObject<UserInfoResponse>(content);
             return response.User;
+        }
+
+
+        public async Task PublishViewAsync(string viewString)
+        {
+            try
+            {
+                var request = CreateRequestMessage(HttpMethod.Post, "api/views.publish");
+                request.Content = EncodeJsonPostRequestContent(viewString);
+
+                await SendRequestAsync(request);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        private StringContent EncodeJsonPostRequestContent(string json)
+        {
+            return new StringContent(json, Encoding.UTF8, "application/json");
         }
 
         private HttpRequestMessage CreateRequestMessage(HttpMethod method, string urlEndpoint)

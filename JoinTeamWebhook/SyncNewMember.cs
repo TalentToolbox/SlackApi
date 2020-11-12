@@ -30,7 +30,7 @@ namespace JoinTeamWebhook
             dynamic data = JsonConvert.DeserializeObject(requestBody);
             //var user = data?.event?.user;
 
-            // Verify
+            // Verify - better to use signing secret than this token it seems this token value is deprecated
             // https://api.slack.com/authentication/verifying-requests-from-slack
             var token = data?.token;
 
