@@ -79,7 +79,8 @@ namespace SlackAppInteraction
 
 
 
-
+                // Response URL is to post block elements as messages, e.g. Slackbot DMs, it cannot be used to update Home Tab (and is not provided)
+                // It can be used with a modal from the home tab where a user selects a channel or a private message conversation for the ResponseUrl to target with
                 //var responseUrl = data.ResponseUrl;
 
                 //if (!string.IsNullOrEmpty(responseUrl))
