@@ -53,12 +53,12 @@ namespace SlackConnection
         }
 
 
-        public async Task PublishViewAsync(string viewString)
+        public async Task PublishViewAsync(string json)
         {
             try
             {
                 var request = CreateRequestMessage(HttpMethod.Post, "api/views.publish");
-                request.Content = EncodeJsonPostRequestContent(viewString);
+                request.Content = EncodeJsonPostRequestContent(json);
 
                 await SendRequestAsync(request);
             }

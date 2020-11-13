@@ -9,13 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackConnection", "..\SlackConnection\SlackConnection.csproj", "{13C5F845-DABF-4D33-A994-EA5863E279EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JoinTeamWebhook", "..\JoinTeamWebhook\JoinTeamWebhook.csproj", "{B918AE88-2067-4FC6-B077-9495A2AC5F62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JoinTeamWebhook", "..\JoinTeamWebhook\JoinTeamWebhook.csproj", "{B918AE88-2067-4FC6-B077-9495A2AC5F62}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Slack Events", "Slack Events", "{667EFC4C-7D96-49DB-A681-9B3BE1B5E1C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Slack Home Events", "Slack Home Events", "{7229AE2B-2B44-4923-92DE-9CE5FDADA010}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlackAppInteraction", "..\SlackAppInteraction\SlackAppInteraction.csproj", "{118E9A68-43FA-47D2-8D9A-704D4B4BC1A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackAppInteraction", "..\SlackAppInteraction\SlackAppInteraction.csproj", "{118E9A68-43FA-47D2-8D9A-704D4B4BC1A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlackServices", "..\SlackServices\SlackServices.csproj", "{132B34AA-3ACA-488E-BF68-F9BC06D0AFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlackBlocks", "..\SlackBlocks\SlackBlocks.csproj", "{BD3426EE-18E5-4F5B-B02C-75A337DBF108}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{118E9A68-43FA-47D2-8D9A-704D4B4BC1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{118E9A68-43FA-47D2-8D9A-704D4B4BC1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{118E9A68-43FA-47D2-8D9A-704D4B4BC1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{132B34AA-3ACA-488E-BF68-F9BC06D0AFD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{132B34AA-3ACA-488E-BF68-F9BC06D0AFD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{132B34AA-3ACA-488E-BF68-F9BC06D0AFD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{132B34AA-3ACA-488E-BF68-F9BC06D0AFD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD3426EE-18E5-4F5B-B02C-75A337DBF108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD3426EE-18E5-4F5B-B02C-75A337DBF108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD3426EE-18E5-4F5B-B02C-75A337DBF108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD3426EE-18E5-4F5B-B02C-75A337DBF108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +59,8 @@ Global
 		{13C5F845-DABF-4D33-A994-EA5863E279EF} = {A23B817F-B190-404F-841A-DEEFD8CBE1B6}
 		{B918AE88-2067-4FC6-B077-9495A2AC5F62} = {667EFC4C-7D96-49DB-A681-9B3BE1B5E1C6}
 		{118E9A68-43FA-47D2-8D9A-704D4B4BC1A5} = {7229AE2B-2B44-4923-92DE-9CE5FDADA010}
+		{132B34AA-3ACA-488E-BF68-F9BC06D0AFD6} = {A23B817F-B190-404F-841A-DEEFD8CBE1B6}
+		{BD3426EE-18E5-4F5B-B02C-75A337DBF108} = {A23B817F-B190-404F-841A-DEEFD8CBE1B6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA522B75-956A-4C95-A2B4-CC235C154332}

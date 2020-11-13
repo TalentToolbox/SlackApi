@@ -188,6 +188,16 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
         }
       },
+      "SlackBlocks/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.1",
+        "compile": {
+          "bin/placeholder/SlackBlocks.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SlackBlocks.dll": {}
+        }
+      },
       "SlackConnection/1.0.0": {
         "type": "project",
         "framework": ".NETStandard,Version=v2.1",
@@ -474,6 +484,11 @@
         "packageIcon.png"
       ]
     },
+    "SlackBlocks/1.0.0": {
+      "type": "project",
+      "path": "../SlackBlocks/SlackBlocks.csproj",
+      "msbuildProject": "../SlackBlocks/SlackBlocks.csproj"
+    },
     "SlackConnection/1.0.0": {
       "type": "project",
       "path": "../SlackConnection/SlackConnection.csproj",
@@ -483,6 +498,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Microsoft.Extensions.Configuration.Json >= 3.1.9",
+      "SlackBlocks >= 1.0.0",
       "SlackConnection >= 1.0.0"
     ]
   },
@@ -516,6 +532,9 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
+            "C:\\Users\\Alex\\Documents\\GitHub\\Slack\\SlackApi\\SlackBlocks\\SlackBlocks.csproj": {
+              "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\Slack\\SlackApi\\SlackBlocks\\SlackBlocks.csproj"
+            },
             "C:\\Users\\Alex\\Documents\\GitHub\\Slack\\SlackApi\\SlackConnection\\SlackConnection.csproj": {
               "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\Slack\\SlackApi\\SlackConnection\\SlackConnection.csproj"
             }
