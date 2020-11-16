@@ -1,16 +1,21 @@
-﻿namespace SlackBlocks.DTO
+﻿using Newtonsoft.Json;
+using System;
+
+namespace SlackBlocks.DTO
 {
     //see https://api.slack.com/reference/messaging/blocks
     public class Block : IBlock
     {
         public string type { get; set; }
+        
         public string block_id { get; set; }
         public Text text { get; set; }
         public Element accessory { get; set; }
         public Element[] elements { get; set; }
         public Text title { get; set; }
         public string image_url { get; set; }
-        public string alt_text { get; set; }
+        public string alt_text { get; set; } = string.Empty;
+
         public Text[] fields { get; set; }
     }
     public class SectionBlock : IBlock
@@ -27,22 +32,28 @@
         }
 
         public string type { get; } = BlockTypes.Section;
+        
         public string block_id { get; set; }
         public Text text { get; set; }
         public IElement accessory { get; set; }
+        
         public Text[] fields { get; set; }
     }
     public class DividerBlock : IBlock
     {
         public string type { get; } = BlockTypes.Divider;
+        
         public string block_id { get; set; }
     }
     public class ImageBlock : IBlock
     {
         public ImageBlock() {}
 
-        public ImageBlock(string title, string imageUrl)
+        public ImageBlock(string title, string imageUrl, string altText)
         {
+            if (string.IsNullOrEmpty(altText))
+                throw new InvalidOperationException("Slack API will not permit images without alt text");
+
             this.title = new Text
             {
                 type = TextTypes.PlainText,
@@ -51,23 +62,29 @@
             };
 
             image_url = imageUrl;
+            alt_text = altText;
         }
 
         public string type { get; } = BlockTypes.Image;
+        
         public string block_id { get; set; }
         public Text title { get; set; }
         public string image_url { get; set; }
-        public string alt_text { get; set; }
+
+        public string alt_text { get; set; } = string.Empty;
     }
     public class ActionsBlock : IBlock
     {
         public string type { get; } = BlockTypes.Actions;
+        
         public string block_id { get; set; }
         public IElement[] elements { get; set; }
     }
     public class ContextBlock : IBlock
     {
         public string type { get; } = BlockTypes.Context;
+
+        
         public string block_id { get; set; }
         public IElement[] elements { get; set; }
     }
@@ -86,14 +103,15 @@
 
         public string type { get; } = BlockTypes.Header;
         public Text text { get; set; }
+        
         public string block_id { get; set; }
     }
     public class Text : IElement
     {
         public string type { get; set; } = TextTypes.PlainText;
-        public string text { get; set; }
+        public string text { get; set; } = "";
         public bool? emoji { get; set; }
-        public bool? verbatim { get; set; }
+        // public bool? verbatim { get; set; }
     }
 
     public class Option
@@ -122,11 +140,13 @@
         public string action_id { get; set; }
         public Text text { get; set; }
         public string value { get; set; }
+        
         public Text placeholder { get; set; }
         public Option[] options { get; set; }
+        
         public OptionGroups[] option_groups { get; set; }
         public string image_url { get; set; }
-        public string alt_text { get; set; }
+        public string alt_text { get; set; } = string.Empty;
         public string url { get; set; }
         public string initial_date { get; set; }
         public string initial_user { get; set; }
@@ -141,7 +161,7 @@
     {
         public string type { get; } = ElementTypes.Image;
         public string image_url { get; set; }
-        public string alt_text { get; set; }
+        public string alt_text { get; set; } = string.Empty;
     }
     public class ButtonElement : IElement
     {
@@ -149,19 +169,24 @@
         public string action_id { get; set; }
         public Text text { get; set; }
         public string value { get; set; }
+        
         public Text placeholder { get; set; }
         public Option[] options { get; set; }
+        
         public OptionGroups[] option_groups { get; set; }
         public string url { get; set; }
         public Confirm confirm { get; set; }
         public string style { get; set; }
     }
+
     public class StaticSelectElement : IElement
     {
         public string type { get; } = ElementTypes.StaticSelect;
         public string action_id { get; set; }
+        
         public Text placeholder { get; set; }
         public Option[] options { get; set; }
+        
         public OptionGroups[] option_groups { get; set; }
         public string initial_option { get; set; }
         public Confirm confirm { get; set; }
@@ -170,6 +195,7 @@
     {
         public string type { get; } = ElementTypes.ExternalSelect;
         public string action_id { get; set; }
+        
         public Text placeholder { get; set; }
         public string initial_option { get; set; }
         public int min_query_length { get; set; }
@@ -181,6 +207,7 @@
     {
         public string type { get; } = ElementTypes.UserSelect;
         public string action_id { get; set; }
+        
         public Text placeholder { get; set; }
         public string initial_user { get; set; }
         public Confirm confirm { get; set; }
@@ -189,6 +216,7 @@
     {
         public string type { get; } = ElementTypes.ChannelSelect;
         public string action_id { get; set; }
+        
         public Text placeholder { get; set; }
         public string initial_conversation { get; set; }
         public Confirm confirm { get; set; }
@@ -197,6 +225,7 @@
     {
         public string type { get; } = ElementTypes.ChannelSelect;
         public string action_id { get; set; }
+        
         public Text placeholder { get; set; }
         public string initial_channel { get; set; }
         public Confirm confirm { get; set; }
@@ -213,6 +242,7 @@
     {
         public string type { get; } = ElementTypes.DatePicker;
         public string action_id { get; set; }
+        
         public Text placeholder { get; set; }
         public string initial_date { get; set; }
         public Confirm confirm { get; set; }

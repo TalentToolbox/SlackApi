@@ -46,7 +46,7 @@ namespace SlackConsole
                 var users = service.GetUsersAsync().Result;
 
 				// Sync user data
-                foreach (var user in users.Where(u => !u.IsSlackBot))
+                foreach (var user in users.Where(u => !u.IsSlackBot && !u.IsBot))
                 {
 					// Publish dashboard for each user
 					// This can be unique for each user, so should store state the database
@@ -62,7 +62,12 @@ namespace SlackConsole
                         }
                     };
 
-                    var json = JsonConvert.SerializeObject(publishRequest);
+                    var json = JsonConvert.SerializeObject(publishRequest,
+                            Formatting.None,
+                            new JsonSerializerSettings
+                            {
+                                NullValueHandling = NullValueHandling.Ignore
+                            });
 
                     service.PublishViewAsync(json).Wait();
                 }

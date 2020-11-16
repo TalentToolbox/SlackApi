@@ -8,7 +8,7 @@ namespace SlackBlocks
     {
         public IBlock[] BuildDefaultHomeTab()
         {
-            var imageBlock = new ImageBlock("Purple Cubed", "https://pbs.twimg.com/profile_images/879273391416541184/xivQgR5v_400x400.jpg");
+            var imageBlock = new ImageBlock("Purple Cubed", "https://pbs.twimg.com/profile_images/879273391416541184/xivQgR5v_400x400.jpg", "Purple Logo");
             var header = new HeaderBlock("Welcome to your home page");
             var description = new SectionBlock("This page shows you personalised information unique to you and collects your feedback");
             var header2 = new HeaderBlock("Your Happiness");

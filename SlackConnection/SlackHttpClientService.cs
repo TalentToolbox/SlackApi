@@ -87,7 +87,10 @@ namespace SlackConnection
             var httpClient = _httpClientFactory.CreateClient(SlackClientName);
             using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
             // Ensure we have a Success Status Code - throws exception if success is false
-            response.EnsureSuccessStatusCode();
+            var success = response.EnsureSuccessStatusCode();
+
+            if (success.StatusCode != System.Net.HttpStatusCode.OK || !success.IsSuccessStatusCode)
+                throw new Exception("API request was not successful");
 
             var content = await response.Content.ReadAsStringAsync();
 

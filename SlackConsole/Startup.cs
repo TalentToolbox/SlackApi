@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SlackBlocks;
+using SlackBlocks.Interfaces;
 using SlackConnection;
 using SlackConnection.Interfaces;
 using System;
@@ -21,6 +23,7 @@ namespace SlackConsole
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ISlackHttpClientService, SlackHttpClientService>();
+            services.AddTransient<IBlockService, BlockService>();
             services.AddSingleton(Configuration);
 
             var slackBaseUrl = Configuration["Slack:BaseUrl"];
