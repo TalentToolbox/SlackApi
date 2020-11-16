@@ -1,16 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SlackAppInteraction.DTO;
+using SlackBlocks.DTO;
+using SlackBlocks.Interfaces;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+[assembly: FunctionsStartup(typeof(SlackAppInteraction.Startup))]
 namespace SlackAppInteraction
 {
-    public static class InteractionHandler
+    public class InteractionHandler
     {
 
         const string MyUserId = "U01DDK9BTQW";
@@ -26,6 +30,47 @@ namespace SlackAppInteraction
             RadioButton,
             TimePicker,
             PlainTextInput
+        }
+
+        private readonly IPublishService _publishService;
+
+        public InteractionHandler(IPublishService publishService)
+        {
+            _publishService = publishService;
+        }
+
+        // https://api.slack.com/interactivity/handling
+        [FunctionName("InteractionHandler")]
+        public async Task<IActionResult> Run(
+            [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestMessage req,
+            ILogger log)
+        {
+            try
+            {
+                log.LogInformation("C# HTTP trigger function processed a request.");
+
+                // Respond to events with a HTTP 200 OK as soon as you can.
+                // Avoid actually processing and reacting to events within the same process.
+                // Implement a queue to handle inbound events after they are received.
+
+                try
+                {
+                    var formData = await req.Content.ReadAsFormDataAsync();
+                    string payload = formData.Get("payload");
+
+                    await ProcessPayload(payload);
+                }
+                catch (Exception ex3)
+                {
+
+                }
+
+                return new OkResult();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         private static SlackActionType GetActionType(string actionType)
@@ -44,60 +89,76 @@ namespace SlackAppInteraction
             };
         }
 
-        // https://api.slack.com/interactivity/handling
-        [FunctionName("InteractionHandler")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestMessage req,
-            ILogger log)
+        private async Task ProcessPayload(string payload)
         {
-            try
+            // This should be passed off to a seperate service
+            // I'd make a HTTP Request to another Azure Function, or add it to a service bus queue
+            await Task.Run(() =>
             {
-                log.LogInformation("C# HTTP trigger function processed a request.");
+                var response = JsonConvert.DeserializeObject<HomeTabPayload>(payload);
 
-                // Respond to events with a HTTP 200 OK as soon as you can.
-                // Avoid actually processing and reacting to events within the same process.
-                // Implement a queue to handle inbound events after they are received.
-
-                try
+                foreach (var action in response.actions)
                 {
-                    var formData = await req.Content.ReadAsFormDataAsync();
-                    string payload = formData.Get("payload");
-
-                    var response = JsonConvert.DeserializeObject<HomeTabPayload>(payload);
-
-                    foreach (var action in response.actions)
-                    {
-                        var type = GetActionType(action.type);
-                    }
+                    var type = GetActionType(action.type);
+                    ProcessAction(type, response.view, action, response.user.Id);
                 }
-                catch(Exception ex3)
-                {
+            });
 
-                }
+        }
 
-
-
-                // Response URL is to post block elements as messages, e.g. Slackbot DMs, it cannot be used to update Home Tab (and is not provided)
-                // It can be used with a modal from the home tab where a user selects a channel or a private message conversation for the ResponseUrl to target with
-                //var responseUrl = data.ResponseUrl;
-
-                //if (!string.IsNullOrEmpty(responseUrl))
-                //{
-                //    // You can use a response_url by making an HTTP POST directly to the URL and including a message payload in the HTTP body.
-                //    // {  "text": "Thanks for your request, we'll process it and get back to you." }
-                //}
-
-
-                //// Verify
-                //// https://api.slack.com/authentication/verifying-requests-from-slack
-                //var token = data?.token;
-
-                return new OkResult();
-            }
-            catch(Exception ex)
+        private void ProcessAction(SlackActionType type, View view, Interaction action, string userId)
+        {
+            switch (type)
             {
-                throw;
+                case SlackActionType.Select:
+                    ProcessSelectAction(view, action, userId);
+                    break;
+                case SlackActionType.FilteredConversationSelect:
+                    break;
+                case SlackActionType.Button:
+                    break;
+                case SlackActionType.UserSelect:
+                    break;
+                case SlackActionType.DatePicker:
+                    break;
+                case SlackActionType.Checkboxes:
+                    break;
+                case SlackActionType.RadioButton:
+                    break;
+                case SlackActionType.TimePicker:
+                    break;
+                case SlackActionType.PlainTextInput:
+                    break;
+                default:
+                    break;
             }
         }
+
+        private void ProcessSelectAction(View view, Interaction action, string userId)
+        {
+            int.TryParse(action.selected_option.value, out int value);
+
+            if (value == 0)
+                RespondToHappinessSelection(view, action, userId, "Sorry to hear that!");
+
+            if (value == 1)
+                RespondToHappinessSelection(view, action, userId, "Cool.");
+
+            if (value == 2)
+                RespondToHappinessSelection(view, action, userId, "Fantastic!");
+        }
+
+        private void RespondToHappinessSelection(View view, Interaction action, string userId, string response)
+        {
+            var request = new PublishRequest
+            {
+                user_id = userId,
+                view = view
+            };
+
+            _publishService.PublishHomePageAsync(request);
+        }
+
+        
     }
 }

@@ -29,7 +29,11 @@
         },
         "frameworks": {
           "netstandard2.1": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Alex\\Documents\\GitHub\\Slack\\SlackApi\\SlackConnection\\SlackConnection.csproj": {
+                "projectPath": "C:\\Users\\Alex\\Documents\\GitHub\\Slack\\SlackApi\\SlackConnection\\SlackConnection.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

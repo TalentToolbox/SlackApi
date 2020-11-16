@@ -24,9 +24,9 @@ namespace SlackConnection
             // and ensure DNS changes are respected https://byterot.blogspot.com/2016/07/singleton-httpclient-dns.html
             _httpClientFactory = httpClientFactory;
 
-            var slackToken = config["Slack:AuthToken"];
+            var slackToken = Environment.GetEnvironmentVariable("Slack:AuthToken"); // config["Slack:AuthToken"];
             _authenticationHeaderValue = new AuthenticationHeaderValue("Bearer", slackToken);
-            SlackClientName = config["Slack:ClientName"];
+            SlackClientName = Environment.GetEnvironmentVariable("Slack:ClientName"); // config["Slack:ClientName"];
         }
 
         public async Task<List<User>> GetUsersAsync()

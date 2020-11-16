@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SlackBlocks.DTO;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace SlackAppInteraction.DTO
@@ -44,6 +45,8 @@ namespace SlackAppInteraction.DTO
         /// Combine the fields within actions (shown below) to help provide the full context of the interaction.
         /// </summary>
         public IEnumerable<Interaction> actions { get; set; }
+
+        public View view { get; set; }
     }
 
     public class Container

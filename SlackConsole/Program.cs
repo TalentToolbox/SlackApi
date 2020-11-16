@@ -9,18 +9,6 @@ using System.Linq;
 
 namespace SlackConsole
 {
-    public class PublishRequest
-    {
-        public string user_id { get; set; }
-        public View view { get; set; }
-    }
-
-    public class View
-    {
-        public string type { get; set; } = "home";
-        public IBlock[] blocks { get; set; }
-    }
-
     public class Program
     {
         public static void Main(string[] args)
