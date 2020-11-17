@@ -34,4 +34,16 @@
         public const string Overflow = "overflow";
         public const string DatePicker = "datepicker";
     }
+
+    public static class ActionTypes
+    {
+        public const string Button = ElementTypes.Button;
+        public const string StaticSelect = ElementTypes.StaticSelect;
+        public const string UserSelect = ElementTypes.UserSelect;
+        public const string DatePicker = ElementTypes.DatePicker;
+        public const string RadioButtons = "radio_buttons";
+        public const string PlainTextInput = "plain_text_input";
+        public const string Checkboxes = "checkboxes";
+        public const string MultiUsersSelect = "multi_users_select";
+    }
 }

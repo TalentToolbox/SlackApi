@@ -7,7 +7,7 @@ using SlackConnection;
 using SlackConnection.Interfaces;
 using System;
 
-namespace SlackAppInteraction
+namespace ScheduledHomePageBuild
 {
     public class Startup : FunctionsStartup
     {
@@ -24,6 +24,7 @@ namespace SlackAppInteraction
             services.AddTransient<ISlackHttpClientService, SlackHttpClientService>();
             services.AddTransient<IBlockService, BlockService>();
             services.AddTransient<IPublishService, PublishService>();
+            services.AddTransient<IUserService, UserService>();
 
             var slackBaseUrl = Environment.GetEnvironmentVariable("Slack:BaseUrl");
             var slackClientName = Environment.GetEnvironmentVariable("Slack:ClientName");

@@ -5,38 +5,29 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SlackAppInteraction.DTO;
+using SlackAppInteraction.Enum;
 using SlackBlocks.DTO;
+using SlackBlocks.Constants;
 using SlackBlocks.Interfaces;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using SlackBlocks.Enum;
 
 [assembly: FunctionsStartup(typeof(SlackAppInteraction.Startup))]
 namespace SlackAppInteraction
 {
     public class InteractionHandler
     {
-
-        const string MyUserId = "U01DDK9BTQW";
-
-        public enum SlackActionType
-        {
-            Select,
-            FilteredConversationSelect,
-            Button,
-            UserSelect,
-            DatePicker,
-            Checkboxes,
-            RadioButton,
-            TimePicker,
-            PlainTextInput
-        }
-
         private readonly IPublishService _publishService;
+        private readonly IBlockService _blockService;
 
-        public InteractionHandler(IPublishService publishService)
+        public InteractionHandler(IPublishService publishService,
+            IBlockService blockService)
         {
             _publishService = publishService;
+            _blockService = blockService;
         }
 
         // https://api.slack.com/interactivity/handling
@@ -73,22 +64,6 @@ namespace SlackAppInteraction
             }
         }
 
-        private static SlackActionType GetActionType(string actionType)
-        {
-            return actionType switch
-            {
-                "button" => SlackActionType.Button,
-                "static_select" => SlackActionType.Select,
-                "users_select" => SlackActionType.UserSelect,
-                "datepicker" => SlackActionType.DatePicker,
-                "radio_buttons" => SlackActionType.RadioButton,
-                "plain_text_input" => SlackActionType.PlainTextInput,
-                "checkboxes" => SlackActionType.Checkboxes,
-                "multi_users_select" => SlackActionType.UserSelect,
-                _ => throw new NotImplementedException("Enum option not implemented"),
-            };
-        }
-
         private async Task ProcessPayload(string payload)
         {
             // This should be passed off to a seperate service
@@ -99,7 +74,7 @@ namespace SlackAppInteraction
 
                 foreach (var action in response.actions)
                 {
-                    var type = GetActionType(action.type);
+                    var type = EnumHelper.GetActionType(action.type);
                     ProcessAction(type, response.view, action, response.user.Id);
                 }
             });
@@ -142,7 +117,7 @@ namespace SlackAppInteraction
                 RespondToHappinessSelection(view, action, userId, "Sorry to hear that!");
 
             if (value == 1)
-                RespondToHappinessSelection(view, action, userId, "Cool.");
+                RespondToHappinessSelection(view, action, userId, "Cool!");
 
             if (value == 2)
                 RespondToHappinessSelection(view, action, userId, "Fantastic!");
@@ -150,6 +125,11 @@ namespace SlackAppInteraction
 
         private void RespondToHappinessSelection(View view, Interaction action, string userId, string response)
         {
+            var actionBlock = view.blocks.Single(b => b.block_id == action.block_id);
+            var actionBlockIndex = Array.IndexOf(view.blocks, actionBlock);
+
+            view.blocks[actionBlockIndex] = _blockService.CreateMessageBlock($"{response} Thanks for sharing this with us :)");
+
             var request = new PublishRequest
             {
                 user_id = userId,
@@ -158,7 +138,5 @@ namespace SlackAppInteraction
 
             _publishService.PublishHomePageAsync(request);
         }
-
-        
     }
 }

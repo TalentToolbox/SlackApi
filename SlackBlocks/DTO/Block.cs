@@ -12,14 +12,17 @@ namespace SlackBlocks.DTO
         
         public string block_id { get; set; }
         public Text text { get; set; }
-        public Element accessory { get; set; }
-        public Element[] elements { get; set; }
+        [JsonConverter(typeof(ElementConverter))]
+        public IElement accessory { get; set; }
+        [JsonConverter(typeof(ElementArrayConverter))]
+        public IElement[] elements { get; set; }
         public Text title { get; set; }
         public string image_url { get; set; }
         public string alt_text { get; set; } = string.Empty;
 
         public Text[] fields { get; set; }
     }
+
     public class SectionBlock : IBlock
     {
         public SectionBlock() { }

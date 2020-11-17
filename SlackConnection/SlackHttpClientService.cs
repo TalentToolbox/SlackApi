@@ -18,15 +18,15 @@ namespace SlackConnection
         private readonly AuthenticationHeaderValue _authenticationHeaderValue;
         private readonly string SlackClientName;
 
-        public SlackHttpClientService(IHttpClientFactory httpClientFactory, IConfigurationRoot config)
+        public SlackHttpClientService(IHttpClientFactory httpClientFactory)
         {
             // Factory prevents socket exhastion https://aspnetmonsters.com/2016/08/2016-08-27-httpclientwrong/
             // and ensure DNS changes are respected https://byterot.blogspot.com/2016/07/singleton-httpclient-dns.html
             _httpClientFactory = httpClientFactory;
 
-            var slackToken = Environment.GetEnvironmentVariable("Slack:AuthToken"); // config["Slack:AuthToken"];
+            var slackToken = Environment.GetEnvironmentVariable("Slack:AuthToken"); 
             _authenticationHeaderValue = new AuthenticationHeaderValue("Bearer", slackToken);
-            SlackClientName = Environment.GetEnvironmentVariable("Slack:ClientName"); // config["Slack:ClientName"];
+            SlackClientName = Environment.GetEnvironmentVariable("Slack:ClientName");
         }
 
         public async Task<List<User>> GetUsersAsync()
@@ -52,20 +52,12 @@ namespace SlackConnection
             return response.User;
         }
 
-
         public async Task PublishViewAsync(string json)
         {
-            try
-            {
-                var request = CreateRequestMessage(HttpMethod.Post, "api/views.publish");
-                request.Content = EncodeJsonPostRequestContent(json);
+            var request = CreateRequestMessage(HttpMethod.Post, "api/views.publish");
+            request.Content = EncodeJsonPostRequestContent(json);
 
-                await SendRequestAsync(request);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            await SendRequestAsync(request);
         }
 
         private StringContent EncodeJsonPostRequestContent(string json)
@@ -86,7 +78,9 @@ namespace SlackConnection
         {
             var httpClient = _httpClientFactory.CreateClient(SlackClientName);
             using var response = await httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead);
+
             // Ensure we have a Success Status Code - throws exception if success is false
+            // Doesn't actually seem to do what it says on the tin, so I would check manually.
             var success = response.EnsureSuccessStatusCode();
 
             if (success.StatusCode != System.Net.HttpStatusCode.OK || !success.IsSuccessStatusCode)

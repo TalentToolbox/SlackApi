@@ -1,23 +1,24 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SlackBlocks;
 using SlackBlocks.Interfaces;
 using SlackConnection;
 using SlackConnection.Interfaces;
+using SlackServices;
+using SlackServices.Interfaces;
 using System;
 
-namespace SlackConsole
+namespace ScheduledHomePageBuild
 {
-    public class Startup
+    public class Startup : FunctionsStartup
     {
-        IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; private set; }
 
-        public Startup()
+        public override void Configure(IFunctionsHostBuilder builder)
         {
-            var builder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json");
-
-            Configuration = builder.Build();
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+            ConfigureServices(builder.Services);
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -25,10 +26,10 @@ namespace SlackConsole
             services.AddTransient<ISlackHttpClientService, SlackHttpClientService>();
             services.AddTransient<IBlockService, BlockService>();
             services.AddTransient<IPublishService, PublishService>();
-            services.AddSingleton(Configuration);
+            services.AddTransient<IUserService, UserService>();
 
-            var slackBaseUrl = Configuration["Slack:BaseUrl"];
-            var slackClientName = Configuration["Slack:ClientName"];
+            var slackBaseUrl = Environment.GetEnvironmentVariable("Slack:BaseUrl");
+            var slackClientName = Environment.GetEnvironmentVariable("Slack:ClientName");
 
             services.AddHttpClient(slackClientName, client =>
             {

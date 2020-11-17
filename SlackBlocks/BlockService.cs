@@ -61,5 +61,17 @@ namespace SlackBlocks
 
             return homePageBlocks.ToArray();
         }
+
+        public IBlock CreateMessageBlock(string response)
+        {
+            return new SectionBlock
+            {
+                text = new Text
+                {
+                    text = response,
+                    emoji = true
+                }
+            };
+        }
     }
 }
