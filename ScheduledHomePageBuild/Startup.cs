@@ -5,6 +5,8 @@ using SlackBlocks;
 using SlackBlocks.Interfaces;
 using SlackConnection;
 using SlackConnection.Interfaces;
+using SlackServices;
+using SlackServices.Interfaces;
 using System;
 
 namespace ScheduledHomePageBuild

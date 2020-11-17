@@ -5,15 +5,13 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SlackAppInteraction.DTO;
-using SlackAppInteraction.Enum;
 using SlackBlocks.DTO;
-using SlackBlocks.Constants;
+using SlackBlocks.Enum;
 using SlackBlocks.Interfaces;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using SlackBlocks.Enum;
 
 [assembly: FunctionsStartup(typeof(SlackAppInteraction.Startup))]
 namespace SlackAppInteraction
