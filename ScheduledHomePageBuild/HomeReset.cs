@@ -26,6 +26,15 @@ namespace ScheduledHomePageBuild
             _userService = userService;
         }
 
+        /// <summary>
+        /// This loops through all users and publishes them a default home page
+        /// In a real app, you would want to get data from a database to display custom information
+        /// You would want to keep track of user interactions 
+        /// e.g. if they got a temp check once a day, you would want to make sure it was removed from the default for that users once they submitted it for the day
+        /// </summary>
+        /// <param name="myTimer"></param>
+        /// <param name="log"></param>
+        /// <returns></returns>
         [FunctionName("HomeReset")]
         public async Task Run([TimerTrigger("0 */2 * * * *")]TimerInfo myTimer, ILogger log)
         {

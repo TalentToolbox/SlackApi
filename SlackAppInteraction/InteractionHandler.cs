@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs;
@@ -11,7 +10,6 @@ using SlackBlocks.Enum;
 using SlackBlocks.Interfaces;
 using SlackServices.Interfaces;
 using System;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -19,6 +17,10 @@ using System.Threading.Tasks;
 [assembly: FunctionsStartup(typeof(SlackAppInteraction.Startup))]
 namespace SlackAppInteraction
 {
+    /// <summary>
+    /// All interactions with the Slack App Homepage will pass through here
+    /// The API the events are sent to is set from the App Configuration https://api.slack.com/events/team_join
+    /// </summary>
     public class InteractionHandler
     {
         private readonly IPublishService _publishService;
@@ -74,6 +76,9 @@ namespace SlackAppInteraction
                 throw;
             }
         }
+
+        // The below code would be in a seperate project and run by a Service Bus Trigger or HttpTrigger in production
+        // This is so Slack can quickly get its HTTP 200 response
 
         private async Task ProcessPayload(string payload)
         {
