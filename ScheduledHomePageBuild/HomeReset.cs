@@ -1,3 +1,4 @@
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using SlackBlocks.DTO;
@@ -7,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
+[assembly: FunctionsStartup(typeof(ScheduledHomePageBuild.Startup))]
 namespace ScheduledHomePageBuild
 {
     public class HomeReset
@@ -25,7 +27,7 @@ namespace ScheduledHomePageBuild
         }
 
         [FunctionName("HomeReset")]
-        public async Task Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
+        public async Task Run([TimerTrigger("0 */2 * * * *")]TimerInfo myTimer, ILogger log)
         {
             log.LogInformation($"C# Timer trigger function executed at: {DateTime.Now}");
 

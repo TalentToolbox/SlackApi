@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Azure.WebJobs;
@@ -8,7 +9,9 @@ using SlackAppInteraction.DTO;
 using SlackBlocks.DTO;
 using SlackBlocks.Enum;
 using SlackBlocks.Interfaces;
+using SlackServices.Interfaces;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -20,39 +23,49 @@ namespace SlackAppInteraction
     {
         private readonly IPublishService _publishService;
         private readonly IBlockService _blockService;
+        private readonly IRequestVerificationService _verificationService;
+
+        private readonly string _signingSecret;
 
         public InteractionHandler(IPublishService publishService,
-            IBlockService blockService)
+            IBlockService blockService,
+            IRequestVerificationService verificationService)
         {
             _publishService = publishService;
             _blockService = blockService;
+            _verificationService = verificationService;
+
+            _signingSecret = Environment.GetEnvironmentVariable("Slack:SigningSecret");
         }
 
         // https://api.slack.com/interactivity/handling
         [FunctionName("InteractionHandler")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestMessage req,
+            [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestMessage request,
             ILogger log)
         {
             try
             {
                 log.LogInformation("C# HTTP trigger function processed a request.");
 
+                string requestBody = await request.Content.ReadAsStringAsync();
+                var requestTimestamp = request.Headers.GetValues("X-Slack-Request-Timestamp").FirstOrDefault();
+                var slackSignature = request.Headers.GetValues("X-Slack-Signature").FirstOrDefault();
+
+                // Validate request signature against secret stored in environment variables
+                if (!_verificationService.IsVerifiedSlackRequest(requestTimestamp, requestBody, slackSignature, _signingSecret))
+                {
+                    return new UnauthorizedResult();
+                }
+
                 // Respond to events with a HTTP 200 OK as soon as you can.
                 // Avoid actually processing and reacting to events within the same process.
                 // Implement a queue to handle inbound events after they are received.
 
-                try
-                {
-                    var formData = await req.Content.ReadAsFormDataAsync();
-                    string payload = formData.Get("payload");
+                var formData = await request.Content.ReadAsFormDataAsync();
+                string payload = formData.Get("payload");
 
-                    await ProcessPayload(payload);
-                }
-                catch (Exception ex3)
-                {
-
-                }
+                await ProcessPayload(payload);
 
                 return new OkResult();
             }

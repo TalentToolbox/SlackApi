@@ -5,6 +5,8 @@ using SlackBlocks;
 using SlackBlocks.Interfaces;
 using SlackConnection;
 using SlackConnection.Interfaces;
+using SlackServices;
+using SlackServices.Interfaces;
 using System;
 
 namespace SlackAppInteraction
@@ -24,6 +26,7 @@ namespace SlackAppInteraction
             services.AddTransient<ISlackHttpClientService, SlackHttpClientService>();
             services.AddTransient<IBlockService, BlockService>();
             services.AddTransient<IPublishService, PublishService>();
+            services.AddTransient<IRequestVerificationService, RequestVerificationService>();
 
             var slackBaseUrl = Environment.GetEnvironmentVariable("Slack:BaseUrl");
             var slackClientName = Environment.GetEnvironmentVariable("Slack:ClientName");
